@@ -1,24 +1,29 @@
 package fr.bvedrenne.extension;
 
+import fr.bvedrenne.annotation.RandomString;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.extension.ExtensionContext;
-import org.junit.jupiter.api.extension.ParameterContext;
-
-import fr.bvedrenne.annotation.RandomString;
 
 public class RandomStringExtension extends AbstractRandom<RandomString> {
-	RandomStringExtension() {
-		super(new Class<?>[] {String.class});
-	}
+    RandomStringExtension() {
+        super(new Class<?>[]{String.class});
+    }
 
-	protected Object getRandomValue(RandomString randomAnnotation, ExtensionContext extensionContext) {
-		if(randomAnnotation.allVisible()) {
-			return RandomStringUtils.randomPrint(randomAnnotation.length());
-		}
-		if(randomAnnotation.ascii()) {
-			return RandomStringUtils.randomAscii(randomAnnotation.length());
-		}
-		return RandomStringUtils.random(randomAnnotation.length(), randomAnnotation.letter(),
-				randomAnnotation.number());
-	}
+    /**
+     * Return random string.
+     *
+     * @param randomAnnotation Class wanted
+     * @param extensionContext Context of the extension
+     * @return String
+     */
+    protected Object getRandomValue(final RandomString randomAnnotation, final ExtensionContext extensionContext) {
+        if (randomAnnotation.allVisible()) {
+            return RandomStringUtils.randomPrint(randomAnnotation.length());
+        }
+        if (randomAnnotation.ascii()) {
+            return RandomStringUtils.randomAscii(randomAnnotation.length());
+        }
+        return RandomStringUtils.random(randomAnnotation.length(), randomAnnotation.letter(),
+                randomAnnotation.number());
+    }
 }

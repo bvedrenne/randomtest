@@ -9,12 +9,26 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import fr.bvedrenne.extension.RandomNumberExtension;
 
-@Target({ ElementType.PARAMETER }) // TODO Add ElementType.FIELD
+/**
+ * Annotation to use a random number.
+ */
+@Target({ElementType.PARAMETER}) // TODO Add ElementType.FIELD
 @Retention(RetentionPolicy.RUNTIME)
 @ExtendWith(RandomNumberExtension.class)
 public @interface RandomNumber {
-	// TODO Use value corresponding to random type
-	int min() default Integer.MIN_VALUE;
+    // TODO Use value corresponding to random type
 
-	int max() default Integer.MAX_VALUE;
+    /**
+     * Minimal value of the number.
+     *
+     * @return Integer.MIN_VALUE by default
+     */
+    int min() default Integer.MIN_VALUE;
+
+    /**
+     * Maximal value of the number.
+     *
+     * @return Integer.MAX_VALUE by default
+     */
+    int max() default Integer.MAX_VALUE;
 }
