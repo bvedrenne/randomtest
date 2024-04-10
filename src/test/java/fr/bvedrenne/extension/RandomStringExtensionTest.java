@@ -1,13 +1,11 @@
 package fr.bvedrenne.extension;
 
 import fr.bvedrenne.annotation.RandomString;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ParameterResolutionException;
 import org.mockito.Mockito;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class RandomStringExtensionTest {
     RandomStringExtension randomNumberExtension = new RandomStringExtension();
@@ -85,5 +83,15 @@ class RandomStringExtensionTest {
 
         Assertions.assertInstanceOf(String.class, value);
         Assertions.assertTrue(StringUtils.isAlphanumeric((String) value));
+    }
+
+    @Test
+    void getRandomValueWithWrongLength() {
+        RandomString randomAnnotation = Mockito.mock(RandomString.class);
+
+        Mockito.when(randomAnnotation.length()).thenReturn(-10);
+
+        Assertions.assertThrows(ParameterResolutionException.class,
+                () -> randomNumberExtension.getRandomValue(randomAnnotation, null), "Invalid length");
     }
 }

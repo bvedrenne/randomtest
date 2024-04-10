@@ -1,17 +1,16 @@
 package fr.bvedrenne.extension;
 
-import java.lang.reflect.Parameter;
-import java.util.function.Supplier;
-
+import fr.bvedrenne.annotation.RandomNumber;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.ExtensionContext.Namespace;
 import org.junit.jupiter.api.extension.ParameterResolutionException;
 
-import fr.bvedrenne.annotation.RandomNumber;
+import java.lang.reflect.Parameter;
+import java.util.function.Supplier;
 
 public class RandomNumberExtension extends AbstractRandom<RandomNumber> {
-
-    public static final Supplier<ParameterResolutionException> CANNOT_FIND_VALUE = () -> new ParameterResolutionException("Cannot find value");
+    public static final Supplier<ParameterResolutionException> CANNOT_FIND_VALUE = () ->
+            new ParameterResolutionException("Cannot find value");
 
     RandomNumberExtension() {
         super(new Class<?>[]{int.class, double.class, long.class, boolean.class, Integer.class, Double.class,

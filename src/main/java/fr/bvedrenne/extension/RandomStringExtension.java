@@ -3,6 +3,7 @@ package fr.bvedrenne.extension;
 import fr.bvedrenne.annotation.RandomString;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.extension.ExtensionContext;
+import org.junit.jupiter.api.extension.ParameterResolutionException;
 
 public class RandomStringExtension extends AbstractRandom<RandomString> {
     RandomStringExtension() {
@@ -17,13 +18,16 @@ public class RandomStringExtension extends AbstractRandom<RandomString> {
      * @return String
      */
     protected Object getRandomValue(final RandomString randomAnnotation, final ExtensionContext extensionContext) {
+        int length = randomAnnotation.length();
+        if (length <= 0) {
+            throw new ParameterResolutionException("Invalid length");
+        }
         if (randomAnnotation.allVisible()) {
-            return RandomStringUtils.randomPrint(randomAnnotation.length());
+            return RandomStringUtils.randomPrint(length);
         }
         if (randomAnnotation.ascii()) {
-            return RandomStringUtils.randomAscii(randomAnnotation.length());
+            return RandomStringUtils.randomAscii(length);
         }
-        return RandomStringUtils.random(randomAnnotation.length(), randomAnnotation.letter(),
-                randomAnnotation.number());
+        return RandomStringUtils.random(length, randomAnnotation.letter(), randomAnnotation.number());
     }
 }
